@@ -13,65 +13,34 @@ import folium
 
 st.set_page_config(layout="wide")
 
-# create a title
-st.title("Data Science Project")
-# create a subtitle
-st.subheader("This is a subtitle")
-# create a text
-st.text("Hello Streamlit")
-# create a header
-st.header("This is a header")
-# create a subheader
-st.subheader("This is a subheader")
-# create a markdown
-st.markdown("### This is a markdown")
-# create a button
-st.button("Simple button")
-# create a checkbox
-st.checkbox("Simple checkbox")
-# create a radio button
-st.radio("Simple radio button", ("option 1", "option 2"))
-# create a selectbox
-st.selectbox("Simple selectbox", ("option 1", "option 2"))
-# create a multiselect
-st.multiselect("Simple multiselect", ("option 1", "option 2"))
-# create a file uploader
-st.file_uploader("Simple file uploader")
-# create a color picker
-st.color_picker("Simple color picker")
-# create a date input
-st.date_input("Simple date input")
-# create a time input
-st.time_input("Simple time input")
-# create a text input
-st.text_input("Simple text input")
-# create a number input
-st.number_input("Simple number input")
-# create a text area
-st.text_area("Simple text area")
-# create a slider
-st.slider("Simple slider")
-# create a progress bar
-st.progress(50)
-# create a spinner
-st.spinner("Simple spinner")
-# create a balloon
-st.balloons()
-# create a code
-st.code("print('Hello Streamlit')")
-# create a json
-st.json({"name": "John", "age": 30})
-# create a dataframe
-st.dataframe(pd.DataFrame({"name": ["John", "Mary"], "age": [30, 25]}))
-# create a table
-st.table(pd.DataFrame({"name": ["John", "Mary"], "age": [30, 25]}))
-# create a line chart
-st.line_chart(pd.DataFrame({"name": ["John", "Mary"], "age": [30, 25]}))
-# create a area chart
-st.area_chart(pd.DataFrame({"name": ["John", "Mary"], "age": [30, 25]}))
-# create a bar chart
-st.bar_chart(pd.DataFrame({"name": ["John", "Mary"], "age": [30, 25]}))
-# create a pyplot
-fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4])
-st.pyplot(fig)
+# Setup Control Side Panel to the left of the page
+st.sidebar.title("Control Panel")
+st.sidebar.header("Select a page to view")
+page = st.sidebar.selectbox("Page", ["Home", "Data", "Model", "About"])
+
+# Setup Home Page
+if page == "Home":
+    st.title("Welcome to the NYC Taxi Fare Prediction App")
+    st.write("This app predicts the **NYC Taxi Fare** using the **Random Forest Regressor** model.")
+    st.write("Please select a page on the left.")
+
+# Setup Data Page
+if page == "Data":
+    st.title("NYC Taxi Fare Data")
+    st.write("The data used in this app is from the Kaggle competition [New York City Taxi Fare Prediction](https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data).")
+    st.write("The data is a subset of the full dataset, containing 55 million records and 11 columns. The data used in this app is a subset of 100,000 records and 8 columns.")
+    st.write("The following is a description of the columns:")
+    st.write("* **key** - Unique identifier of the record")
+    st.write("* **fare_amount** - The taxi fare (target variable)")
+    st.write("* **pickup_datetime** - Date and time of pickup")
+    st.write("* **pickup_longitude** - Longitude coordinate of pickup location")
+    st.write("* **pickup_latitude** - Latitude coordinate of pickup location")
+    st.write("* **dropoff_longitude** - Longitude coordinate of dropoff location")
+    st.write("* **dropoff_latitude** - Latitude coordinate of dropoff location")
+    st.write("* **passenger_count** - Number of passengers")
+    st.write("The following is a sample of the data:")
+    st.write("![Sample Data](https://raw.githubusercontent.com/leexa90/streamlit-taxi-fare-prediction/main/images/sample_data.png)")
+    st.write("The following is a histogram of the target variable:")
+    st.write("![Target Variable](https://raw.githubusercontent.com/leexa90/streamlit-taxi-fare-prediction/main/images/target_variable
+    .png)")
+    st.write("The following is a scatter plot of the pickup and dropoff locations:")
