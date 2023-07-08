@@ -17,7 +17,7 @@ st.set_page_config(layout="wide")
 # create select menu
 st.sidebar.title('Select Menu')
 st.sidebar.subheader('Select the page you want to see')
-page = st.sidebar.selectbox(['Main Page', 'Map', 'Statistics', 'About'], index=0)
+page = st.sidebar.selectbox(['Main Page', 'Map', 'Statistics', 'About'], label_visibility="hidden")
 
 ###### MAIN PAGE ######
 
