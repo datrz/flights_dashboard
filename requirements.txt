@@ -7,3 +7,4 @@ pillow
 folium
 bs4
 requests
+selenium

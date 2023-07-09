@@ -11,6 +11,10 @@ import seaborn as sns
 import folium
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 st.set_page_config(layout="wide")
 
@@ -23,18 +27,26 @@ page = st.sidebar.selectbox('Page',['Main Page', 'Map', 'Statistics', 'About'], 
 ###### MAIN PAGE ######
 
 url = 'https://my.flightradar24.com/dtrzc/flights'
-response = requests.get(url)
+#response = requests.get(url)
 
-# Now response.text will contain the HTML content of the page
-html_content = response.text
+driver = webdriver.Firefox() # or use any other driver
+driver.get(url)
+
+while True:
+    try:
+        # Wait for the "fetch more" button to be clickable, and then click it
+        button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'flight-list-more')))
+        button.click()
+    except Exception as e:
+        # If the "fetch more" button is not found or is not clickable, 
+        # it means we have reached the end of the list
+        break
+
+soup = BeautifulSoup(driver.page_source, 'html.parser')
+driver.quit()
 
 # create en empty table with the following columns DATE, FLIGHT, REG, FROM, TO, DIST, DEP, ARR, AIRLINE, AIRCRAFT, SEAT, NOTE
 df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP', 'ARR', 'AIRLINE', 'AIRCRAFT', 'SEAT', 'NOTE'])
-
-# Assuming `html_doc` is your HTML document
-soup = BeautifulSoup(html_content, 'html.parser')
-
-#st.write(str(html_content))
 
 def get_data(cell, element, attr=None, value=None):
     """Extracts data from a BeautifulSoup object and handles exceptions."""
