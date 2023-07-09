@@ -82,18 +82,9 @@ df_preloaded = pd.read_csv('flights.csv')
 # add additional column with inverted index of the index
 df_preloaded['flight_count'] = df_preloaded.index.values[::-1]+1
 
-# check if the flights from df are already in df_preloaded
-# if not, add them to df_preloaded
-# take combination of DATE, FLIGHT
-for index, row in df.iterrows():
-    if not df_preloaded[(df_preloaded['DATE'] == row['DATE']) & (df_preloaded['FLIGHT'] == row['FLIGHT'])].empty:
-        #print('Flight already in df_preloaded')
-        continue
-    elif row['DATE'] and row['FLIGHT']:
-        df_preloaded = pd.concat([df_preloaded, row], ignore_index=True)
-
 # ====== MAIN PAGE VIEW ======
 
 if page == 'Main Page':
     # Print the dataframe in streamlit
+    st.write(df)
     st.write(df_preloaded)
