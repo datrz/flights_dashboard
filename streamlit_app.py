@@ -15,6 +15,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.options import Options
+
 
 st.set_page_config(layout="wide")
 
@@ -29,7 +31,9 @@ page = st.sidebar.selectbox('Page',['Main Page', 'Map', 'Statistics', 'About'], 
 url = 'https://my.flightradar24.com/dtrzc/flights'
 #response = requests.get(url)
 
-driver = webdriver.Firefox() # or use any other driver
+options = Options()
+options.add_argument("--headless")
+driver = webdriver.Firefox(options=options)
 driver.get(url)
 
 while True:
