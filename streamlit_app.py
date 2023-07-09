@@ -34,26 +34,36 @@ df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP',
 # Assuming `html_doc` is your HTML document
 soup = BeautifulSoup(html_content, 'html.parser')
 
-flights = []
+def get_data(cell, element, attr=None, value=None):
+    """Extracts data from a BeautifulSoup object and handles exceptions."""
+    try:
+        if attr and value:
+            result = cell.find(element, {attr: value}).get('data-tooltip-value')
+        else:
+            result = cell.text.strip()
+        return result
+    except AttributeError:
+        return 'N/A'
 
+flights = []
 for row in soup.find_all('tr'):
-    flight = {}
     cells = row.find_all('td')
     if cells:
-        flight['date'] = cells[0].find('span', {'class': 'inner-date'}).text
-        flight['flight'] = cells[1].text.strip()
-        flight['reg'] = cells[2].text.strip()
-        flight['from'] = cells[3].find('span', {'class': 'tooltip'}).get('data-tooltip-value')
-        flight['to'] = cells[4].find('span', {'class': 'tooltip'}).get('data-tooltip-value')
-        flight['dist'] = cells[5].text.strip()
-        flight['dep_time'] = cells[6].text.strip()
-        flight['arr_time'] = cells[7].text.strip()
-        flight['airline'] = cells[8].find('span', {'class': 'tooltip'}).get('data-tooltip-value')
-        flight['aircraft'] = cells[9].find('span', {'class': 'tooltip'}).get('data-tooltip-value')
-        flight['seat'] = cells[10].text.strip()
-        flight['note'] = cells[11].text.strip()
-        flight['class'] = cells[12].find('span', {'class': 'circle-icon class-economy tooltip'}).get('data-tooltip-value')
-        flight['reason'] = cells[12].find('span', {'class': 'circle-icon reason-leisure tooltip'}).get('data-tooltip-value')
+        flight = {}
+        flight['date'] = get_data(cells[0], 'span', 'class', 'inner-date')
+        flight['flight'] = get_data(cells[1], 'td')
+        flight['reg'] = get_data(cells[2], 'td')
+        flight['from'] = get_data(cells[3], 'span', 'class', 'tooltip')
+        flight['to'] = get_data(cells[4], 'span', 'class', 'tooltip')
+        flight['dist'] = get_data(cells[5], 'td')
+        flight['dep_time'] = get_data(cells[6], 'td')
+        flight['arr_time'] = get_data(cells[7], 'td')
+        flight['airline'] = get_data(cells[8], 'span', 'class', 'tooltip')
+        flight['aircraft'] = get_data(cells[9], 'span', 'class', 'tooltip')
+        flight['seat'] = get_data(cells[10], 'td')
+        flight['note'] = get_data(cells[11], 'td')
+        flight['class'] = get_data(cells[12], 'span', 'class', 'circle-icon class-economy tooltip')
+        flight['reason'] = get_data(cells[12], 'span', 'class', 'circle-icon reason-leisure tooltip')
         flights.append(flight)
 
 df = pd.DataFrame(flights)
