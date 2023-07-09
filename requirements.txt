@@ -6,4 +6,3 @@ seaborn
 pillow
 folium
 bs4
-BeautifulSoup
