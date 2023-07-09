@@ -79,6 +79,9 @@ df = pd.DataFrame(flights)
 # load flights.csv
 df_preloaded = pd.read_csv('flights.csv')
 
+# invert indexes in df_preloaded
+df_preloaded = df_preloaded.iloc[::-1].reset_index(drop=True)
+
 # ====== MAIN PAGE VIEW ======
 
 if page == 'Main Page':
