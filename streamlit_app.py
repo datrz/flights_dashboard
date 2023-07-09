@@ -52,5 +52,6 @@ for row in soup.find_all('tr'):
 
 df = pd.DataFrame(flights)
 
-# Print the dataframe in streamlit
-st.write(df)
+if page == 'Main Page':
+    # Print the dataframe in streamlit
+    st.write(df)
