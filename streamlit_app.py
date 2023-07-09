@@ -79,8 +79,10 @@ df = pd.DataFrame(flights)
 # load flights.csv
 df_preloaded = pd.read_csv('flights.csv')
 
-# add additional column with inverted index
-df_preloaded['flight_count'] = df_preloaded.index
+# add additional column with inverted index of the index
+df_preloaded['flight_count'] = df_preloaded.index.values[::-1]
+
+
 
 # ====== MAIN PAGE VIEW ======
 
