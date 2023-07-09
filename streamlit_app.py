@@ -31,6 +31,11 @@ html_content = response.text
 # create en empty table with the following columns DATE, FLIGHT, REG, FROM, TO, DIST, DEP, ARR, AIRLINE, AIRCRAFT, SEAT, NOTE
 df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP', 'ARR', 'AIRLINE', 'AIRCRAFT', 'SEAT', 'NOTE'])
 
+# Assuming `html_doc` is your HTML document
+soup = BeautifulSoup(html_content, 'html.parser')
+
+st.write(str(html_content))
+
 def get_data(cell, element, attr=None, value=None):
     """Extracts data from a BeautifulSoup object and handles exceptions."""
     try:
