@@ -34,18 +34,26 @@ df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP',
 # Assuming `html_doc` is your HTML document
 soup = BeautifulSoup(html_content, 'html.parser')
 
-st.write(str(html_content))
+#st.write(str(html_content))
 
 def get_data(cell, element, attr=None, value=None):
     """Extracts data from a BeautifulSoup object and handles exceptions."""
     try:
         if attr and value:
-            result = cell.find(element, {attr: value}).get('data-tooltip-value')
+            result = None
+            results = cell.find_all(element)
+            for res in results:
+                if res.get(attr) == value:
+                    result = res.get('data-tooltip-value')
+                    break
+            if result is None:
+                result = cell.text.strip()
         else:
             result = cell.text.strip()
         return result
     except AttributeError:
         return 'N/A'
+
 
 flights = []
 for row in soup.find_all('tr'):
