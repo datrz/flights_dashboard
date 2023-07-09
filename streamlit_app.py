@@ -58,20 +58,20 @@ for row in soup.find_all('tr'):
     cells = row.find_all('td')
     if cells:
         flight = {}
-        flight['date'] = get_data(cells[0], 'span', 'class', 'inner-date')
-        flight['flight'] = get_data(cells[1], 'td')
-        flight['reg'] = get_data(cells[2], 'td')
-        flight['from'] = get_data(cells[3], 'span', 'class', 'tooltip')
-        flight['to'] = get_data(cells[4], 'span', 'class', 'tooltip')
-        flight['dist'] = get_data(cells[5], 'td')
-        flight['dep_time'] = get_data(cells[6], 'td')
-        flight['arr_time'] = get_data(cells[7], 'td')
-        flight['airline'] = get_data(cells[8], 'span', 'class', 'tooltip')
-        flight['aircraft'] = get_data(cells[9], 'span', 'class', 'tooltip')
-        flight['seat'] = get_data(cells[10], 'td')
-        flight['note'] = get_data(cells[11], 'td')
-        flight['class'] = get_data(cells[12], 'span', 'class', 'circle-icon class-economy tooltip')
-        flight['reason'] = get_data(cells[12], 'span', 'class', 'circle-icon reason-leisure tooltip')
+        flight['DATE'] = get_data(cells[0], 'span', 'class', 'inner-date')
+        flight['FLIGHT'] = get_data(cells[1], 'td')
+        flight['REG'] = get_data(cells[2], 'td')
+        flight['FROM'] = get_data(cells[3], 'span', 'class', 'tooltip')
+        flight['TO'] = get_data(cells[4], 'span', 'class', 'tooltip')
+        flight['DIST'] = get_data(cells[5], 'td')
+        flight['DEP'] = get_data(cells[6], 'td')
+        flight['ARR'] = get_data(cells[7], 'td')
+        flight['AIRLINE'] = get_data(cells[8], 'span', 'class', 'tooltip')
+        flight['AIRCRAFT'] = get_data(cells[9], 'span', 'class', 'tooltip')
+        flight['SEAT'] = get_data(cells[10], 'td')
+        flight['NOTE'] = get_data(cells[11], 'td')
+        flight['CLASS'] = get_data(cells[12], 'span', 'class', 'circle-icon class-economy tooltip')
+        flight['REASON'] = get_data(cells[12], 'span', 'class', 'circle-icon reason-leisure tooltip')
         flights.append(flight)
 
 df = pd.DataFrame(flights)
@@ -82,12 +82,19 @@ df_preloaded = pd.read_csv('flights.csv')
 # add additional column with inverted index of the index
 df_preloaded['flight_count'] = df_preloaded.index.values[::-1]+1
 
-
+# check if the flights from df are already in df_preloaded
+# if not, add them to df_preloaded
+# take combination of DATE, FLIGHT
+for index, row in df.iterrows():
+    if not df_preloaded[(df_preloaded['DATE'] == row['DATE']) & (df_preloaded['FLIGHT'] == row['FLIGHT'])].empty:
+        #print('Flight already in df_preloaded')
+        continue
+    else
+        #print('Flight not in df_preloaded')
+        df_preloaded = df_preloaded.append(row, ignore_index=True)
 
 # ====== MAIN PAGE VIEW ======
 
 if page == 'Main Page':
     # Print the dataframe in streamlit
-    st.write(df)
-
     st.write(df_preloaded)
