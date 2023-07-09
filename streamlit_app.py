@@ -89,9 +89,8 @@ for index, row in df.iterrows():
     if not df_preloaded[(df_preloaded['DATE'] == row['DATE']) & (df_preloaded['FLIGHT'] == row['FLIGHT'])].empty:
         #print('Flight already in df_preloaded')
         continue
-    else
-        #print('Flight not in df_preloaded')
-        df_preloaded = df_preloaded.append(row, ignore_index=True)
+    else:
+        df_preloaded = pd.concat([df_preloaded, df], ignore_index=True)
 
 # ====== MAIN PAGE VIEW ======
 
