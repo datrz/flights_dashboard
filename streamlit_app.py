@@ -34,6 +34,8 @@ df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP',
 # Assuming `html_doc` is your HTML document
 soup = BeautifulSoup(html_content, 'html.parser')
 
+st.write(soup)
+
 def get_data(cell, element, attr=None, value=None):
     """Extracts data from a BeautifulSoup object and handles exceptions."""
     try:
