@@ -9,8 +9,8 @@ from matplotlib import pyplot as plt
 from  matplotlib.ticker import FuncFormatter
 import seaborn as sns
 import folium
+import requests
 from bs4 import BeautifulSoup
-
 
 st.set_page_config(layout="wide")
 
@@ -21,6 +21,13 @@ st.sidebar.subheader('Select the page you want to see')
 page = st.sidebar.selectbox('Page',['Main Page', 'Map', 'Statistics', 'About'], label_visibility="hidden")
 
 ###### MAIN PAGE ######
+
+url = 'https://my.flightradar24.com/dtrzc/flights'
+response = requests.get(url)
+
+# Now response.text will contain the HTML content of the page
+html_content = response.text
+
 
 # create en empty table with the following columns DATE, FLIGHT, REG, FROM, TO, DIST, DEP, ARR, AIRLINE, AIRCRAFT, SEAT, NOTE
 df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP', 'ARR', 'AIRLINE', 'AIRCRAFT', 'SEAT', 'NOTE'])
