@@ -90,7 +90,7 @@ for index, row in df.iterrows():
         #print('Flight already in df_preloaded')
         continue
     else:
-        df_preloaded = pd.concat([df_preloaded, df], ignore_index=True)
+        df_preloaded = pd.concat([df_preloaded, row], ignore_index=True)
 
 # ====== MAIN PAGE VIEW ======
 
