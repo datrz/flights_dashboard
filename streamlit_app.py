@@ -89,7 +89,7 @@ for index, row in df.iterrows():
     if not df_preloaded[(df_preloaded['DATE'] == row['DATE']) & (df_preloaded['FLIGHT'] == row['FLIGHT'])].empty:
         #print('Flight already in df_preloaded')
         continue
-    else:
+    elif row['DATE'] and row['FLIGHT']:
         df_preloaded = pd.concat([df_preloaded, row], ignore_index=True)
 
 # ====== MAIN PAGE VIEW ======
