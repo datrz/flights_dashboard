@@ -28,12 +28,11 @@ response = requests.get(url)
 # Now response.text will contain the HTML content of the page
 html_content = response.text
 
-
 # create en empty table with the following columns DATE, FLIGHT, REG, FROM, TO, DIST, DEP, ARR, AIRLINE, AIRCRAFT, SEAT, NOTE
 df = pd.DataFrame(columns=['DATE', 'FLIGHT', 'REG', 'FROM', 'TO', 'DIST', 'DEP', 'ARR', 'AIRLINE', 'AIRCRAFT', 'SEAT', 'NOTE'])
 
 # Assuming `html_doc` is your HTML document
-soup = BeautifulSoup(html_doc, 'html.parser')
+soup = BeautifulSoup(html_content, 'html.parser')
 
 flights = []
 
