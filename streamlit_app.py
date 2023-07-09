@@ -20,7 +20,7 @@ st.sidebar.title('Select Menu')
 st.sidebar.subheader('Select the page you want to see')
 page = st.sidebar.selectbox('Page',['Main Page', 'Map', 'Statistics', 'About'], label_visibility="hidden")
 
-###### MAIN PAGE ######
+###### DOWNLOAD DATA ######
 
 url = 'https://my.flightradar24.com/dtrzc/flights'
 response = requests.get(url)
@@ -76,6 +76,13 @@ for row in soup.find_all('tr'):
 
 df = pd.DataFrame(flights)
 
+# load flights.csv
+df_preloaded = pd.read_csv('flights.csv')
+
+# ====== MAIN PAGE VIEW ======
+
 if page == 'Main Page':
     # Print the dataframe in streamlit
     st.write(df)
+
+    st.write(df_preloaded)
